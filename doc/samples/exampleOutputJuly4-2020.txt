@@ -1,0 +1,89 @@
+ onclose [Clean: false, Code: 1006, Reason: none] 
+open ws://localhost:5678/ 
+onopen  
+onmessage The Church of the God Who Makes No Difference has no position on Copies, one way or the other. Period."
+ 
+onmessage
+"The Way is long, brother, and we are weak with waiting,"
+ 
+onmessage "You're right about the Church of the God Who Makes No Difference. We're weak with . . . the process."
+ 
+onmessage "We've been waiting for a long time for that. I'll feel a strange affection for a stranger Goddess, though I know she's older than I, and that she used to be the very image of purity and power. I know that about myself. However, I can't stand it any more. Armed with Love and a dirty mind, I walked through the Upper Levels of Grauman's temple and was cheated of the pleasures of the flesh and the sky. Now I know that about myself. And it's gone."
+ 
+onmessage You can't stand it any more? That's impossible."
+ 
+onmessage "But is it? Because you're afraid."
+ 
+onmessage
+"I am not afraid. Nor was I ever."
+ 
+onmessage "You've lived with me. And held my hand, which is something I've done many times. It's part of me. I feel it in my bones. It's part of me. And though it's part of me, it's not something I can show you. You know that, you little fool. And now it's time we went to the temple of the Gods and talked with them. We'll have them for supper. Or is that too much to hope for?"
+ 
+onmessage "All right. Cosmetics are the foundation of a temple. Their strength goes far deeper. They heal like a cancer. And their weakness goes far deeper. They're not like an ordinary person. They're not going to go into shock. But you don't want to be an ordinary person. You don't want to be a copy. You don't want to run the Copy against the grain. You don't want to harvest every possible particle."
+ 
+onmessage "There'll be a way. The stars, it's true, seem to be orbiting around the black hole. Why else but that the gods are there?"
+ 
+onmessage "There originally was no need for a god. But then what came after? Why not a gedanken experiment -- a planetary system, with a few dozen planets, scattered over a few dozen black holes?"
+ 
+onmessage "That was the answer to that,"
+ 
+onmessage "No, it wasn't."
+ 
+onmessage "Then why didn't we wait for the stars to approach us, and mark them with the black circles? The stars are eternal, and frequently arrive at their proper stations in the great hallowed sky. Why didn't we wait for them to move? That would have been the natural way, and most efficient. But then we'd have had to wait for the stars to move in the correct formations, and which never does that. Only in the most special cases, such as the one you're describing, does a star make a straight down without ever reaching its proper station in the sky. And that one doesn't seem to be yet in the sky."
+ 
+onmessage
+"That's impossible."
+ 
+onmessage "Star motion is like a spinning of the wheels of a gigantic spinning wheel. It's impossible. Look at a spinning wheel. There are two different kinds of motion: one, straight down, which is what you're describing; the other, up, which is what you're trying to convey."
+ 
+onmessage "You're saying that a five-th-level expert couldn't pick it out? That a five-th-level celebrity could never have conceived of the pattern?"
+ 
+onmessage "There's a new courtesan dwells on Pimp Street, hasn't she? She's called the Puppy Goddess. She's an adept, at least among the lower order, and therefore eligible for membership in the Order of the Golden Snails. She's already served by one of the members, who's been her lover for a while. He's called the Clow. He's quite good with his hands, you know, and has probably already had several other person in the house, others besides the Clow. He's also an adept, at least in spirit, which I know is a virtue in and of itself. Well, if those two men were to come in and take up residence here, as if that were the plan, I'd suggest they'd take some time to look after the little one and keep her out of the way."
+ 
+onmessage
+"That might indeed be easier said than done. But it wouldn't be impossible, would it?"
+ 
+onmessage "Why not?"
+ 
+onmessage "Because it's not impossible. You know, I saw the original drawing of the city. It's quite good, actually. Not perfect, but good enough. And I think the funny thing is . . . it's been years since I've been able to see the city in person. It's usually on television, when I'm working --"
+ 
+onmessage "That's pretty damn good, girl,"
+ 
+onmessage "You should see the new one."
+ 
+onmessage "You've been inside? Good enough to share good memories with,"
+ 
+onmessage "Yes. But--"
+ 
+onmessage "So? Do you think we should open the box and look at the drawing?"
+ 
+onmessage "Yes. But--"
+ 
+onmessage Wait,"
+ 
+onmessage "What if we just . . . put the lid on?"
+ 
+onmessage "It won't be there,"
+ 
+onmessage What if we just . . . put the whole thing in? I know: there's no reason why you shouldn't be able to do that. But what if the Lambertians find out? If they find out that we're eavesdropping on every conversation they hold about us, it can have a profound effect. I've already seen the reports --"
+ 
+onmessage "The effect wears off at a certain distance the ears can no longer bear it. So, to spare, let's go toward the end of the room and the door after it. By the by, don't try to force yourself on this one. I know you. For I've already had one client who sought out and then broke off with me because I disclosed to him at that distance his interest in a particular client of mine."
+ 
+onmessage "You're doing it again!"
+ 
+onmessage "Yes, and I'm helping you,"
+ 
+onmessage Help? You don't have much to lose. What am I supposed to do while you're being exotic and decorative?"
+ 
+onmessage "That's enough,"
+ 
+onmessage "You can change the colors of the tape to change the effect."
+ 
+onmessage "Oh, you know, I don't think so. I can see the glint of your eye. Maybe you're seeing something invisible. But what's that you're seeing?"
+ 
+onmessage "In this painting there's a third person, aren't there? Some sort of guide, some kind of mental attitude --"
+ 
+onmessage "Yes, indeed there is a person, a man, an adept, who rides a two-headed dragon"—
+
+
+"An adept?"
