@@ -39,10 +39,13 @@ class Message():
         self.message = message
         self.lastUpdated = now() # TODO: Shorten everywhere!
         self.finished = False
+        self.hasContent = False
 
-    def updateMessage(self, message, finished=False):
+    def updateMessage(self, message, signalHasContent=True, finished=False):
         self.message = message
         self.finished = finished
+        if signalHasContent:
+            self.hasContent = True
         self.lastUpdated = now()
 
         # Archive finished messages
@@ -88,7 +91,7 @@ class Message():
     
     def toJSON(self):
         #print (json.dumps({"model": self.model, "id": self.id, "message": self.message, "lastUpdated": int(self.lastUpdated.timestamp()*1000), "finished": self.finished}))
-        return json.dumps({"model": self.model, "id": self.id, "message": self.message, "lastUpdated": int(self.lastUpdated.timestamp()*1000), "finished": self.finished})
+        return json.dumps({"model": self.model, "id": self.id, "message": self.message, "lastUpdated": int(self.lastUpdated.timestamp()*1000), "finished": self.finished, "hasContent": self.hasContent})
 
 def getLatestMessages(maxNum):
     global previousMessages

@@ -2,24 +2,29 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <p v-for="message in messages" :key="message.id">
-      Message {{ message.id }}: {{ message.message }}
+      <b>{{ friendlyNames[message.model] }}</b><br> {{ message.message }}<br>
     </p>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <!--<HelloWorld msg="Welcome to Your Vue.js App" />-->
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+//import HelloWorld from "./components/HelloWorld.vue";
 import ReconnectingWebSocket from "reconnectingwebsocket";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    //HelloWorld
   },
   data: function() {
     return {
-      messages: []
+      messages: [],
+      friendlyNames: {
+        "dialog-permutationCity-774M-2-300": "Permutation City by Greg Egan",
+        "dialog-lankhmar-all-774M-1000":
+          "Fafherd and the Grey Mouser by Fritz Lieber"
+      }
     };
   },
   mounted() {
