@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import json
 import os
+import platform
 import random
 import threading
 import time
@@ -203,7 +204,7 @@ def generateLineOfConversation(conversation, model):
     newMessage = Message(model, "...")
     conversation.addMessage(newMessage)
     newMessage.prompt = prompt
-    proc = subprocess.Popen(['gpt2tc.exe', '-m', '774M', '-l', '400', 'g', prompt], stdout=subprocess.PIPE)
+    proc = subprocess.Popen(['gpt2tc.exe' if platform.system() == 'Windows' else 'gpt2tc', '-m', '774M', '-l', '400', 'g', prompt], stdout=subprocess.PIPE)
     buffer = b""
     bufferStr = ""
     unprintedBuffer = b""

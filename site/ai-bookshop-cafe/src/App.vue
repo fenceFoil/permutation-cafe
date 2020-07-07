@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <div v-for="conversation in conversations" :key="conversation.id" style="border:2px solid black;">
+    <div id="sign">
+      Permutation Cafe
+    </div>
+    <div class="conversation" v-for="conversation in conversations" :key="conversation.id" style="border:2px solid black;">
       <p v-for="message in conversation.messages" :key="message.id">
         <b>{{ friendlyNames[message.model] }}</b><br />
         {{ message.message }}<br />
@@ -49,12 +51,29 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital@1&display=swap');
+
+#sign {
+  font-family: 'Courier Prime', monospace;
+  font-size: 3rem;
+
+  color: #00000044;
+
+  position: absolute;
+  margin-left: 4rem;
+  margin-top: 0.6rem;
+}
+
+.conversation {
+  font-size: 11px;
+  font-family: serif;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: black;
 }
 </style>
