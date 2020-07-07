@@ -1,11 +1,12 @@
 {
-  "name": "gpt-cafe",
+  "name": "permutation-cafe",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "npm run build && aws s3 sync dist s3://steele.red/permutation-cafe --profile redirection"
   },
   "dependencies": {
     "howler": "^2.2.0",

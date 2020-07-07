@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <p>HELLO ALL</p>
     <img alt="Vue logo" src="./assets/logo.png" />
     <div v-for="conversation in conversations" :key="conversation.id" style="border:2px solid black;">
       <p v-for="message in conversation.messages" :key="message.id">
