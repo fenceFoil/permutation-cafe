@@ -235,13 +235,28 @@ def generateLineOfConversation(conversation, model):
     newMessage.updateMessage(newText, finished=True)
 
 MODELS = [
-    'dialog-lankhmar-all-774M-1000',
-    'dialog-permutationCity-774M-2-300',
-    'dialog-hitchhikerAll-774M-700',
-    'dialog-marsSeries-774M-600',
-    'dialog-50shades-774M-1200'
+    {
+        'cover': 'lankhmarCover.jpg',
+        'id': 'dialog-lankhmar-all-774M-1000'
+    },
+    {
+        'cover': 'permutationCityCover.jpg',
+        'id': 'dialog-permutationCity-774M-2-300'
+    },
+    {
+        'cover': 'hitchhikerCover.jpg',
+        'id': 'dialog-hitchhikerAll-774M-700'
+    },
+    {
+        'cover': 'barsoomCover.jpg',
+        'id': 'dialog-marsSeries-774M-600'
+    },
+    {
+        'cover': '50shadesCover.jpg',
+        'id': 'dialog-50shades-774M-1200'
+    },
 ]
-CURR_MODEL_INDEX = 0
+MODEL_IDS = [participant['id'] for participant in MODELS]
 
 lastSpeakerModel = None
 def selectNextSpeaker():
@@ -281,7 +296,7 @@ def startConversations():
         con = Conversation()
         activeConversations.append(con)
     # Deal out the models like cards into the conversations
-    shuffledModelDeck = MODELS.copy()
+    shuffledModelDeck = MODEL_IDS.copy()
     random.shuffle(shuffledModelDeck)
     currConversation = 0
     while len(shuffledModelDeck) > 0:
@@ -315,6 +330,10 @@ conversationThread = threading.Thread(target=run_conversations, daemon=True)
 conversationThread.start()
 
 async def exposeMessages(websocket, path):
+    # Push static information once to the client
+    await websocket.send(json.dumps({'participantsMetadata':MODELS}))
+
+    # Then push ongoing changes...
     def getLatestMessageUpdateTime():
         # Pull messages from all active conversations and return the latest update time found
         latestFound = 0
@@ -335,7 +354,7 @@ async def exposeMessages(websocket, path):
             latestTime = getLatestMessageUpdateTime()
         # Send an update to webpages: a list of all active conversations and enough data to display them
         lastUpdateSent = latestTime
-        await websocket.send(json.dumps([c.encodeForWebsite() for c in activeConversations]))
+        await websocket.send(json.dumps({'update':[c.encodeForWebsite() for c in activeConversations]}))
         # Rate limiting
         await asyncio.sleep(1.0/5)
 
