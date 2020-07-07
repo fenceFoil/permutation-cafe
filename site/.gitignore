@@ -3,3 +3,4 @@ gptConversationSiteVenv-old
 multiConversationArchive.db
 gpt2tc/current774MModel.txt
 .vscode/settings.json
+node_modules
