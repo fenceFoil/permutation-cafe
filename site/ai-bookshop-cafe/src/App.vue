@@ -10,9 +10,7 @@
         class="coverWrapper"
       >
         <portal :to="'participant-' + participant.id">
-          <div class="cover">
-            <img :src="require(`./assets/${participant.cover}`)" />
-          </div>
+          <img :src="require(`./assets/${participant.cover}`)" />
         </portal>
       </div>
     </div>
@@ -22,7 +20,18 @@
         v-for="conversation in conversations"
         :key="conversation.id"
       >
-        <div class="conversationMessages">
+        <div
+          class="conversationMessages"
+          v-chat-scroll="{ always: false, smooth: true, notSmoothOnInit: true }"
+        >
+          <div class="conversationCovers">
+            <portal-target
+              v-for="participant in conversation.participants"
+              :key="participant"
+              :name="'participant-' + participant"
+              class="cover"
+            />
+          </div>
           <div
             class="message"
             v-for="message in conversation.messages"
@@ -33,11 +42,6 @@
             {{ message.message }}<br />
           </div>
         </div>
-        <portal-target
-          v-for="participant in conversation.participants"
-          :key="participant"
-          :name="'participant-' + participant"
-        />
       </div>
     </div>
     <!--<HelloWorld msg="Welcome to Your Vue.js App" />-->
@@ -112,25 +116,75 @@ export default {
 }
 
 .cover {
-  transition: transform linear 2s;
+  /*position: relative;*/
+  position: absolute;
+}
+
+.conversation:nth-child(1) .cover:nth-child(1) {
+  left: -8em;
+}
+
+.conversation:nth-child(1) .cover:nth-child(2) {
+  left: -10em;
+  top: 15em;
+}
+
+.conversation:nth-child(1) .cover:nth-child(3) {
+  bottom: -16em;
+}
+
+.conversation:nth-child(1) .cover:nth-child(4) {
+  right: -12em;
+  top: -2em;
+}
+
+.conversation:nth-child(1) .cover:nth-child(5) {
+  right: -14em;
+  top: 22em;
+}
+
+.conversation:nth-child(2) .cover:nth-child(1) {
+  top: -10em;
+}
+
+.conversation:nth-child(2) .cover:nth-child(2) {
+  left: -10em;
+  top: 15em;
+}
+
+.conversation:nth-child(2) .cover:nth-child(3) {
+  left: -8em;
+}
+
+.conversation:nth-child(2) .cover:nth-child(4) {
+  right: -14em;
+  top: 22em;
+}
+
+.conversation:nth-child(2) .cover:nth-child(5) {
+  right: -12em;
+  top: -2em;
 }
 
 .cover img {
-  position: absolute;
+  transition: transform linear 2s;
   width: 6em;
 }
 
 .conversation {
-  font-size: 12px;
+  /*font-size: 15px;*/
   font-family: serif;
   position: absolute;
+  width: 30em;
+  height: 20em;
 }
 
 .conversationMessages {
-  width: 30em;
-  height: 20em;
+  width: 100%;
+  height: 100%;
   padding: 1em;
   overflow-y: auto;
+  scroll-snap-type: y mandatory;
   display: flex;
   flex-direction: column;
   border: 0.5em solid black;
@@ -138,6 +192,7 @@ export default {
 }
 
 .message {
+  font-size: 1.2em;
   margin: 1em;
 }
 
@@ -162,18 +217,22 @@ export default {
 }*/
 
 .conversation:nth-child(1) {
-  left: 15%;
-  top: 10%;
+  left: max(15%, 10em);
+  top: max(10%, 10em);
 }
 
 .conversation:nth-child(2) {
-  right: 10%;
-  bottom: 10%;
+  right: max(3em, min(10%, 15em));
+  bottom: max(3em, 10%, 15em);
 }
 
 .message {
   margin: 0;
   margin-bottom: 1em;
+}
+
+.message:last-child {
+  padding-bottom: 2em;
 }
 
 #app {
