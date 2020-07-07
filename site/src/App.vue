@@ -1,6 +1,14 @@
 <template>
-  <div id="app">
-    <p>HELLO ALL</p>
+  <div id="app" @mousemove="mouseMove">
+    <form>
+      <textarea id="incoming"></textarea>
+      <button type="submit">submit</button>
+    </form>
+    <pre id="outgoing"></pre>
+
+    <button @click="speak">This is a button. Click to Speek</button>
+    <button id="musicButton" @click="startMusic">This is a button. Click to Music</button>
+    
     <img alt="Vue logo" src="./assets/logo.png" />
     <div v-for="conversation in conversations" :key="conversation.id" style="border:2px solid black;">
       <p v-for="message in conversation.messages" :key="message.id">
@@ -15,6 +23,9 @@
 <script>
 //import HelloWorld from "./components/HelloWorld.vue";
 import ReconnectingWebSocket from "reconnectingwebsocket";
+import SimplePeer from "simple-peer";
+import {Howl, Howler} from 'howler';
+let backgroundAudio;
 
 export default {
   name: "App",
@@ -37,6 +48,75 @@ export default {
       }
     };
   },
+  methods: {
+    startMusic: () => {
+      backgroundAudio = new Howl({
+        src: ['audio/99632__tomlija__small-cafe-ambience.wav'],
+        autoplay: true,
+        loop: true,
+        volume: 0.5,
+        preload: true,
+        html5: true,
+        onend: function() {
+          console.log('Finished!');
+        }
+      });
+    },
+    mouseMove: (event) => {
+      // if (backgroundAudio){
+      //   console.log(event.clientX,event.clientY)
+      //   // backgroundAudio.pos(event.clientX,event.clientY,0);
+      //   backgroundAudio.stereo(event.clientX - 750);
+      // }
+
+    },
+    speak: () => {
+      //----------------- TEXT TO VOICE -----------------------
+    if ('speechSynthesis' in window) {
+      var synthesis = window.speechSynthesis;
+
+       var voice = synthesis.getVoices().filter(function(voice) {
+    return voice.lang === 'en';
+  })[0];
+
+
+      // Regex to match all English language tags e.g en, en-US, en-GB
+  var langRegex = /^en(-[a-z]{2})?$/i;
+
+  // Get the available voices and filter the list to only have English speakers
+  var voices = synthesis.getVoices().filter(voice => langRegex.test(voice.lang));
+
+  // Log the properties of the voices in the list
+  voices.forEach(function(v) {
+    console.log({
+      name: v.name,
+      lang: v.lang,
+      uri: v.voiceURI,
+      local: v.localService,
+      default: v.default
+    })
+  });
+
+var utterance = new SpeechSynthesisUtterance('Hello World');
+
+  // Set utterance properties
+  utterance.voice = voice;
+  utterance.pitch = 1.5;
+  utterance.rate = 1.25;
+  utterance.volume = 0.8;
+
+  // Speak the utterance
+  synthesis.speak(utterance);
+
+
+    } else {
+      console.log('Text-to-speech not supported.');
+    }
+
+    //----------------------------------------
+
+    }
+  },
   mounted() {
     var ws = new ReconnectingWebSocket("ws://localhost:5678/");
     ws.timeoutInterval = 2000;
@@ -45,6 +125,43 @@ export default {
       console.log(event.data);
       that.conversations = JSON.parse(event.data);
     };
+
+
+    
+    
+
+
+
+
+
+
+  //   const p = new SimplePeer({
+  //       initiator: true,
+  //       trickle: false
+  //     })
+
+  //     console.log("INITIATOR", p.initiator)
+
+  //     p.on('error', err => console.log('error', err))
+
+  //     p.on('signal', data => {
+  //       console.log('SIGNAL', JSON.stringify(data))
+  //       document.querySelector('#outgoing').textContent = JSON.stringify(data)
+  //     })
+
+  //     document.querySelector('form').addEventListener('submit', ev => {
+  //       ev.preventDefault()
+  //       p.signal(JSON.parse(document.querySelector('#incoming').value))
+  //     })
+
+  //     p.on('connect', () => {
+  //       console.log('CONNECT')
+  //       p.send('whatever' + Math.random())
+  //     })
+
+  //     p.on('data', data => {
+  //       console.log('data: ' + data)
+  //     })
   }
 };
 </script>
@@ -57,5 +174,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  width:100%;
+  height: 100%;
 }
 </style>
