@@ -1,4 +1,4 @@
-# ai-bookshop-cafe
+# gpt-cafe
 
 ## Project setup
 ```
