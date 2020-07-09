@@ -37,7 +37,9 @@
             v-for="message in conversation.messages"
             :key="message.id"
           >
-            <b>{{ friendlyNames[message.model] }}</b
+            <b
+              >{{ participants.find(x => x.id === message.model).title }} by
+              {{ participants.find(x => x.id === message.model).author }}</b
             ><br />
             {{ message.message }}<br />
           </div>
@@ -60,17 +62,7 @@ export default {
   data: function() {
     return {
       conversations: [],
-      participants: [],
-      friendlyNames: {
-        "dialog-permutationCity-774M-2-300": "Permutation City by Greg Egan",
-        "dialog-lankhmar-all-774M-1000":
-          "Fafherd and the Grey Mouser by Fritz Lieber",
-        "dialog-hitchhikerAll-774M-700":
-          "The Hitchhiker's Guide to the Galaxy by Douglas Adams",
-        "dialog-marsSeries-774M-600":
-          "A Princess of Mars by Edgar Rice Burroughs",
-        "dialog-50shades-774M-1200": "50 Shades of Gray by E. L. James"
-      }
+      participants: []
     };
   },
   mounted() {

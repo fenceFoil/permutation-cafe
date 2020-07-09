@@ -189,7 +189,7 @@ def generateLineOfConversation(conversation, model):
     prompt = ""
     for previousMessage in conversation.getMessagesSortedByTime():
         if previousMessage.message and len(previousMessage.message.strip())>2:
-            prompt = previousMessage.message + prompt + '\r\n\r\n'
+            prompt = previousMessage.message.strip() + '\r\n' + prompt
         if len(prompt) > 500:
             prompt = prompt[-500:]
             break
@@ -237,23 +237,33 @@ def generateLineOfConversation(conversation, model):
 MODELS = [
     {
         'cover': 'lankhmarCover.jpg',
-        'id': 'dialog-lankhmar-all-774M-1000'
+        'id': 'dialog-lankhmar-all-774M-1000',
+        'title': 'Fafhrd and the Gray Mouser',
+        'author': 'Fritz Leiber'
     },
     {
         'cover': 'permutationCityCover.jpg',
-        'id': 'dialog-permutationCity-774M-2-300'
+        'id': 'dialog-permutationCity-774M-2-300',
+        'title': 'Permutation City',
+        'author': 'Greg Egan'
     },
     {
         'cover': 'hitchhikerCover.jpg',
-        'id': 'dialog-hitchhikerAll-774M-700'
+        'id': 'dialog-hitchhikerAll-774M-700',
+        'title': 'The Hitchhiker''s Guide to the Galaxy Trilogy',
+        'author': 'Douglas Adams'
     },
     {
         'cover': 'barsoomCover.jpg',
-        'id': 'dialog-marsSeries-774M-600'
+        'id': 'dialog-marsSeries-774M-600',
+        'title': 'The Barsoom Series',
+        'author': 'Edgar Rice Burroughs'
     },
     {
         'cover': '50shadesCover.jpg',
-        'id': 'dialog-50shades-774M-1200'
+        'id': 'dialog-50shades-774M-1200',
+        'title': '50 Shades of Grey',
+        'author': 'E. L. James'
     },
 ]
 MODEL_IDS = [participant['id'] for participant in MODELS]
