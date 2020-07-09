@@ -8,5 +8,7 @@ SSH: root@ipaddr
 adduser cafe
 exit
 
+scp -r gpt2tc/ cafe@ipaddr:/home/cafe/cafe/
+
 SSH: cafe@ipaddr
 
