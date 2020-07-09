@@ -7,9 +7,9 @@ import random
 import threading
 import time
 import sqlite3
-import subprocess
 import uuid
 
+import transformers
 import websockets
 
 serverID = str(uuid.uuid4())
@@ -204,6 +204,18 @@ def generateLineOfConversation(conversation, model):
     newMessage = Message(model, "...")
     conversation.addMessage(newMessage)
     newMessage.prompt = prompt
+
+    def isMessageDone(msg):
+        return random.uniform(0, 1) > 0.95
+
+    pt = PretrainedConfig.from_pretrained('C:\\projects\\gilbertAndGPT\\dialog-lankhmar-all-774M-1000\\run1')
+    generator = pipeline('text-generation', model=pt)
+
+    buffer = prompt
+    while not isMessageDone(buffer):
+        prompt += generator(buffer, max_length=100)[0]['generated_text']
+        print (prompt)
+
     proc = subprocess.Popen(['gpt2tc.exe' if platform.system() == 'Windows' else 'gpt2tc', '-m', '774M', '-l', '400', 'g', prompt], stdout=subprocess.PIPE)
     buffer = b""
     bufferStr = ""

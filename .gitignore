@@ -3,5 +3,6 @@ gptConversationSiteVenv-old
 multiConversationArchive.db
 gpt2tc/current774MModel.txt
 .vscode/settings.json
-
+**/*.bin
+**/*.meta
 site/dist/
