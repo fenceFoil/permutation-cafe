@@ -189,7 +189,7 @@ def generateLineOfConversation(conversation, model):
     prompt = ""
     for previousMessage in conversation.getMessagesSortedByTime():
         if previousMessage.message and len(previousMessage.message.strip())>2:
-            prompt = previousMessage.message.strip() + '\r\n' + prompt.strip()
+            prompt = previousMessage.message.strip() + '\r\n\r\n' + prompt.strip()
         if len(prompt) > 500:
             prompt = prompt[-500:]
             break

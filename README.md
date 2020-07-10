@@ -1,6 +1,14 @@
 The bookModel model weights are available on request. They're enormous.
 
+## PRIME THE PUMP FOR CURRENT MODEL
+
+* Rename one of the books models from dialog-lankhmar-all-774M-1000.bin (for example) to gpt2_774M.bin
+* Put dialog-lankhmar-all-774M-1000 (for example) into current774MModel.txt
+
 ## Deployment
+
+
+
 
 ```plantuml
 @startuml
@@ -44,8 +52,6 @@ cd cafe
 pip3 install -r requirements.txt
 # Open port 80, and preroute port 3000 from our servers through it
 sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-# Using nginx instead...
-# sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
 python3 multipleConversationServer.py
 
 # Get the website pages up
@@ -159,3 +165,25 @@ sudo service apache2 restart
 # Redid the port setup
 # Redeployed website dist
 sudo rm /var/www/html/*.*
+
+
+
+```plantuml
+title old scheme
+@startuml
+boundary "dns\nhttp://permutationcafe.art" as dns
+cloud "Linode at $10/mo." {
+    interface websocketd as wsd
+    node shellScriptWithArgs as sh{
+        node gpt2tc
+    }
+
+    wsd -- sh
+
+    folder "/home/cafe/cafe/site" as dist
+    wsd -- dist
+    dns - wsd
+
+}
+@enduml
+```

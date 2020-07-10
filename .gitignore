@@ -6,3 +6,4 @@ gpt2tc/current774MModel.txt
 **/*.bin
 **/*.meta
 site/dist/
+bookModels
