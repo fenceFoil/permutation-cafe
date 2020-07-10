@@ -193,13 +193,13 @@ def generateLineOfConversation(conversation, model):
         if len(prompt) > 500:
             prompt = prompt[-500:]
             break
+    #TODO prompt += '"' # Always make sure prompt begins with a double quote.
     if len(prompt) <= 0:
         prompt = '"'
 
     # TODO: Uncap length
     # TODO: Post process to change ending commas to periods
     # TODO: post process to make sure the final new line start with a double quote
-    # TODO: Vulnerable to invalid UTF8 on line 57 )decoding after loop)
     # TODO: When we run past the end of memory, we get the time=1.11 word/s text and no endquote. Consider cropping to last fullstop sentence.
     newMessage = Message(model, "...")
     conversation.addMessage(newMessage)
@@ -215,7 +215,11 @@ def generateLineOfConversation(conversation, model):
         # Our training data uses \r\n, and the two kinds of newlines prompt different output from GPT2 even using the same seed.
         # We want to always input and store prompts with \r\n line endings.
         normalizedStdout = normalizeFinalMessage(decodedStdout)
-        return normalizedStdout[len(prompt):]
+        if prompt != '"':
+            return normalizedStdout[len(prompt):]
+        else:
+            # If this is the first prompt, which provides with model with a single double quote to get started, then we should show that quote on screen.
+            return normalizedStdout
 
     def isMessageDone(prompt, decodedMsg):
         msg = removePrompt(prompt, decodedMsg)
@@ -333,11 +337,12 @@ def startConversations():
 
 def run_conversations():
     """Blocking method that updates conversations with new messages and drifting participants forever"""
+    global activeConversations
 
     startConversations()
 
     while True:
-        time.sleep(0.5)
+        time.sleep(0.2)
 
         # Check for viewers, wait for them to appear if there are none
         savedClientLastWaitingAt = clientLastWaitingAt
@@ -352,6 +357,10 @@ def run_conversations():
         selectModel(nextParticipant)
         print ("Running inference.")
         generateLineOfConversation(findConversationByParticipant(nextParticipant), nextParticipant)
+
+        # Reboot conversations periodically
+        if sum([len(c.messages) for c in activeConversations]) > 50:
+            startConversations()
 
 conversationThread = threading.Thread(target=run_conversations, daemon=True)
 conversationThread.start()

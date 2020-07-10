@@ -67,7 +67,7 @@ export default {
     ws.timeoutInterval = 2000;
     let that = this;
     ws.onmessage = function(event) {
-      console.log(event.data);
+      //console.log(event.data);
       let packet = JSON.parse(event.data);
       if ("update" in packet) {
         that.conversations = packet.update;
