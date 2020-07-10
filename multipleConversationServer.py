@@ -7,9 +7,9 @@ import random
 import threading
 import time
 import sqlite3
+import subprocess
 import uuid
 
-import transformers
 import websockets
 
 serverID = str(uuid.uuid4())
@@ -189,7 +189,7 @@ def generateLineOfConversation(conversation, model):
     prompt = ""
     for previousMessage in conversation.getMessagesSortedByTime():
         if previousMessage.message and len(previousMessage.message.strip())>2:
-            prompt = previousMessage.message.strip() + '\r\n' + prompt
+            prompt = previousMessage.message.strip() + '\r\n' + prompt.strip()
         if len(prompt) > 500:
             prompt = prompt[-500:]
             break
@@ -204,35 +204,40 @@ def generateLineOfConversation(conversation, model):
     newMessage = Message(model, "...")
     conversation.addMessage(newMessage)
     newMessage.prompt = prompt
+    
+    def normalizeFinalMessage(decodedMsg):
+        # Replace \n\ with \r\n
+        return decodedMsg.replace('\r\n', '\n').replace('\n', '\r\n')
 
-    def isMessageDone(msg):
-        return random.uniform(0, 1) > 0.95
+    def removePrompt(prompt, decodedStdout):
+        # (True on linux, anyway. I've given up on running this on windows for now)
+        # gpt2tc normalizes all newlines (except the ones provided in the prompt and echoed back out) into \n
+        # Our training data uses \r\n, and the two kinds of newlines prompt different output from GPT2 even using the same seed.
+        # We want to always input and store prompts with \r\n line endings.
+        normalizedStdout = normalizeFinalMessage(decodedStdout)
+        return normalizedStdout[len(prompt):]
 
-    pt = PretrainedConfig.from_pretrained('C:\\projects\\gilbertAndGPT\\dialog-lankhmar-all-774M-1000\\run1')
-    generator = pipeline('text-generation', model=pt)
+    def isMessageDone(prompt, decodedMsg):
+        msg = removePrompt(prompt, decodedMsg)
+        return msg.replace('\r\n', '\n').endswith('"\n') and len(msg) > 5
 
-    buffer = prompt
-    while not isMessageDone(buffer):
-        prompt += generator(buffer, max_length=100)[0]['generated_text']
-        print (prompt)
-
-    proc = subprocess.Popen(['gpt2tc.exe' if platform.system() == 'Windows' else 'gpt2tc', '-m', '774M', '-l', '400', 'g', prompt], stdout=subprocess.PIPE)
+    proc = subprocess.Popen(['gpt2tc.exe' if platform.system() == 'Windows' else './gpt2tc', '-m', '774M', '-l', '400', 'g', prompt], stdout=subprocess.PIPE)
     buffer = b""
-    bufferStr = ""
-    unprintedBuffer = b""
+    decodedMsg = ""
     utfErrorCount = 0 # CONSECUTIVE utf decoding errors count
-    for line in iter(lambda: proc.stdout.read(1), b''):
-        buffer += line
+    for data in iter(lambda: proc.stdout.read(1), b''):
+        buffer += data
         try:
-            bufferStr = buffer.decode("utf-8").replace('\r', '')
+            decodedMsg = buffer.decode("utf-8")
             if DEBUG:
-                print(bufferStr)
-            if bufferStr.endswith('"\n') and len(bufferStr) > 5+len(prompt):
+                print(decodedMsg)
+            if isMessageDone(prompt, decodedMsg):
                 break
             else:
-                newMessage.updateMessage(('"' if prompt == '"' else '') + bufferStr[len(prompt):])
-            #if bufferStr.startswith('"\r\n'):
-            #    bufferStr = b"" # get rid of empty stuff at beginning
+                newMessage.updateMessage(removePrompt(prompt, decodedMsg))
+                #newMessage.updateMessage(('"' if prompt == '"' else '') + decodedMsg[len(prompt):])
+            #if decodedMsg.startswith('"\r\n'):
+            #    decodedMsg = b"" # get rid of empty stuff at beginning
             utfErrorCount = 0
         except:
             utfErrorCount += 1
@@ -240,9 +245,9 @@ def generateLineOfConversation(conversation, model):
                 break
 
     proc.kill()
-    #bufferStr = buffer.decode("utf-8").replace('\r', '')
-    #print("Output: "+bufferStr)
-    newText = ('"' if prompt == '"' else '') + bufferStr[len(prompt):]
+    #decodedMsg = buffer.decode("utf-8").replace('\r', '')
+    #print("Output: "+decodedMsg)
+    newText = removePrompt(prompt, decodedMsg)
     print ("Generated: "+newText)
     newMessage.updateMessage(newText, finished=True)
 
@@ -380,7 +385,7 @@ async def exposeMessages(websocket, path):
         # Rate limiting
         await asyncio.sleep(1.0/5)
 
-start_server = websockets.serve(exposeMessages, "localhost", 5678)
+start_server = websockets.serve(exposeMessages, "0.0.0.0", 3001)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

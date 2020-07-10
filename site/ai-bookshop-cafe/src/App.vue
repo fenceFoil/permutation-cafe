@@ -46,18 +46,15 @@
         </div>
       </div>
     </div>
-    <!--<HelloWorld msg="Welcome to Your Vue.js App" />-->
   </div>
 </template>
 
 <script>
-//import HelloWorld from "./components/HelloWorld.vue";
 import ReconnectingWebSocket from "reconnectingwebsocket";
 
 export default {
   name: "App",
   components: {
-    //HelloWorld
   },
   data: function() {
     return {
@@ -66,7 +63,7 @@ export default {
     };
   },
   mounted() {
-    var ws = new ReconnectingWebSocket("ws://localhost:5678/");
+    var ws = new ReconnectingWebSocket("ws://permutationcafe.art/cafesocket/");
     ws.timeoutInterval = 2000;
     let that = this;
     ws.onmessage = function(event) {
@@ -79,14 +76,7 @@ export default {
         that.participants = packet.participantsMetadata;
       }
     };
-  } /*,
-  methods: function() {
-    return {
-      findConversationOf(participantID) {
-        this.conversations
-      }
-    }
-  }*/
+  }
 };
 </script>
 
