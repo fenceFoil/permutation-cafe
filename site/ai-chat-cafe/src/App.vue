@@ -105,6 +105,8 @@ var utterance = new SpeechSynthesisUtterance('Hello World');
   utterance.rate = 1.25;
   utterance.volume = 0.8;
 
+  console.log(utterance)
+
   // Speak the utterance
   synthesis.speak(utterance);
 
@@ -118,7 +120,7 @@ var utterance = new SpeechSynthesisUtterance('Hello World');
     }
   },
   mounted() {
-    var ws = new ReconnectingWebSocket("ws://localhost:5678/");
+    var ws = new ReconnectingWebSocket("ws://permutationcafe.art/cafesocket/");
     ws.timeoutInterval = 2000;
     let that = this;
     ws.onmessage = function(event) {
